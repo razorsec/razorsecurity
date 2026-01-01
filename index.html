@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RazorSecurity | AI-Powered Cybersecurity Defense</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --razor-red: #ff0033;
+            --razor-cyan: #00ffff;
+            --razor-purple: #9d00ff;
+            --dark-bg: #0a0a0f;
+            --darker-bg: #050508;
+            --card-bg: rgba(20, 20, 30, 0.8);
+            --border-glow: rgba(255, 0, 51, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 51, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Glowing orb effect */
+        .orb-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--razor-red) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 1;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-effect:nth-child(2) {
+            background: radial-gradient(circle, var(--razor-cyan) 0%, transparent 70%);
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(10vw, 10vh) scale(1); }
+            33% { transform: translate(80vw, 30vh) scale(1.2); }
+            66% { transform: translate(20vw, 70vh) scale(0.8); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-glow);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--razor-red);
+            box-shadow: 0 0 10px var(--razor-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            transition: all 0.3s;
+            color: var(--razor-red);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            transform: translateX(10px);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--razor-cyan);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        .hero-tag::before {
+            content: '[ ';
+            color: var(--razor-red);
+        }
+
+        .hero-tag::after {
+            content: ' ]';
+            color: var(--razor-red);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--razor-red) 50%, var(--razor-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease-out 0.7s backwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            animation: fadeIn 1s ease-out 0.9s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 1.1s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--razor-red);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--razor-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: var(--razor-cyan);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 8rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--razor-red);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--razor-red), transparent);
+            transition: left 0.6s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            border-color: var(--razor-red);
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .service-features li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .service-features li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--razor-red);
+        }
+
+        /* Tech Stack Section */
+        .tech-stack {
+            padding: 8rem 0;
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .tech-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 0, 51, 0.2);
+            transition: all 0.3s;
+        }
+
+        .tech-item:hover {
+            border-color: var(--razor-red);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.2);
+            transform: scale(1.05);
+        }
+
+        .tech-item h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-cyan);
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.85rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 0, 51, 0.1), rgba(0, 255, 255, 0.1));
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .cta-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff, var(--razor-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-glow);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-red);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--razor-cyan);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 0, 51, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .services-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Scan line effect */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to bottom, transparent, var(--razor-red), transparent);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="orb-effect"></div>
+    <div class="orb-effect"></div>
+    <div class="scanline"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">RazorSecurity</div>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-tag">Next-Gen Defense Systems</div>
+                <h1>Securing AI. Defending Against AI.</h1>
+                <p class="hero-description">
+                    Advanced cybersecurity solutions that protect your LLMs, networks, and digital assets 
+                    against sophisticated AI-powered attacks. We don't just respond to threats—we predict 
+                    and neutralize them before they materialize.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Deploy Protection</a>
+                    <a href="#services" class="btn btn-secondary">Explore Solutions</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Core Capabilities</div>
+                <h2 class="section-title">Comprehensive AI Security</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>LLM Security & Training</h3>
+                    <p>Harden your language models against adversarial attacks, prompt injection, and data poisoning. 
+                    We implement multi-layered defense strategies and conduct rigorous security training.</p>
+                    <ul class="service-features">
+                        <li>Adversarial robustness testing</li>
+                        <li>Prompt injection prevention</li>
+                        <li>Model hardening protocols</li>
+                        <li>Secure fine-tuning pipelines</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>AI Attack Defense</h3>
+                    <p>Protect your infrastructure from autonomous AI-driven attacks with real-time threat detection 
+                    and adaptive countermeasures powered by machine learning.</p>
+                    <ul class="service-features">
+                        <li>Automated attack pattern recognition</li>
+                        <li>AI-powered intrusion detection</li>
+                        <li>Behavioral anomaly analysis</li>
+                        <li>Self-healing security systems</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Network Fortification</h3>
+                    <p>Enterprise-grade network security that evolves with emerging threats. Zero-trust architecture 
+                    combined with AI-driven monitoring for complete visibility and control.</p>
+                    <ul class="service-features">
+                        <li>Zero-trust implementation</li>
+                        <li>Distributed DDoS mitigation</li>
+                        <li>Encrypted tunnel management</li>
+                        <li>Quantum-resistant protocols</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">💎</div>
+                    <h3>Asset Protection</h3>
+                    <p>Comprehensive digital asset security covering intellectual property, data stores, and 
+                    proprietary systems with military-grade encryption and access controls.</p>
+                    <ul class="service-features">
+                        <li>Data loss prevention (DLP)</li>
+                        <li>IP theft countermeasures</li>
+                        <li>Blockchain asset tracking</li>
+                        <li>Secure data lifecycle management</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Threat Intelligence</h3>
+                    <p>Stay ahead of adversaries with continuous threat monitoring, predictive analytics, 
+                    and real-time intelligence feeds from global security networks.</p>
+                    <ul class="service-features">
+                        <li>Real-time threat feeds</li>
+                        <li>Predictive threat modeling</li>
+                        <li>Dark web monitoring</li>
+                        <li>Vulnerability assessment</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔬</div>
+                    <h3>Security Research</h3>
+                    <p>Cutting-edge security research and penetration testing to identify vulnerabilities 
+                    before attackers do. Red team operations that simulate sophisticated threats.</p>
+                    <ul class="service-features">
+                        <li>Penetration testing</li>
+                        <li>Red team exercises</li>
+                        <li>Vulnerability research</li>
+                        <li>Security code review</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stack" id="technology">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Technology Stack</div>
+                <h2 class="section-title">Built On Cutting Edge</h2>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="service-icon">🧠</div>
+                    <h4>Neural Networks</h4>
+                </div>
+                <div class="tech-item">
+                    <div class="service-icon">🔐</div>
+                    <h4>Cryptography</h4>
+                </div>
+                <div class="tech-item">
+                    <div class="service-icon">📊</div>
+                    <h4>Behavioral Analysis</h4>
+                </div>
+                <div class="tech-item">
+                    <div class="service-icon">⚙️</div>
+                    <h4>Automation</h4>
+                </div>
+                <div class="tech-item">
+                    <div class="service-icon">🌐</div>
+                    <h4>Edge Computing</h4>
+                </div>
+                <div class="tech-item">
+                    <div class="service-icon">🔗</div>
+                    <h4>Blockchain</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Impact Metrics</div>
+                <h2 class="section-title">Proven Results</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Threat Detection Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Continuous Monitoring</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">&lt;10ms</div>
+                    <div class="stat-label">Response Time</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Protected Systems</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container">
+            <h2>Ready to Fortify Your Defenses?</h2>
+            <p>Don't wait for a breach to take security seriously. Our team is ready to assess your 
+            vulnerabilities and implement enterprise-grade protection tailored to your needs.</p>
+            <a href="mailto:contact@razorsecurity.net" class="btn btn-primary">Schedule Consultation</a>
+        </div>
+    </section>
+
+    <footer id="about">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>RazorSecurity</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Elite cybersecurity solutions for the AI era. Protecting what matters most in an 
+                        increasingly hostile digital landscape.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">LLM Security</a></li>
+                        <li><a href="#services">AI Defense</a></li>
+                        <li><a href="#services">Network Security</a></li>
+                        <li><a href="#services">Asset Protection</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#technology">Technology</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@razorsecurity.net">contact@razorsecurity.net</a></li>
+                        <li><a href="#">Security Blog</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 RazorSecurity. All systems protected. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
