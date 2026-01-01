@@ -1,4 +1,4 @@
-# RazorSecurity Website
+# Razor Security Website
 
 High-tech cybersecurity website for **razorsecurity.net** - showcasing AI security, LLM protection, network defense, and asset protection services.
 
