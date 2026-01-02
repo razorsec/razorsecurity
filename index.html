@@ -211,6 +211,7 @@
         .menu-overlay.active {
             display: block;
             opacity: 1;
+            pointer-events: auto;
         }
 
         /* Hero Section */
@@ -595,43 +596,50 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hamburger {
-                display: flex;
+                display: flex !important;
             }
 
             nav {
                 position: relative;
+                z-index: 1001;
             }
 
             .nav-links {
-                display: flex;
-                position: fixed;
-                top: 0;
-                right: 0;
-                height: 100vh;
-                width: 280px;
-                max-width: 85%;
-                background: var(--darker-bg);
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 5rem 2rem 2rem;
-                gap: 2rem;
-                border-left: 1px solid var(--border-glow);
-                transform: translateX(100%);
-                transition: transform 0.3s ease-in-out;
-                z-index: 999;
-                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
-                margin: 0;
-                list-style: none;
-                box-sizing: border-box;
-                overflow-y: auto;
+                position: fixed !important;
+                top: 0 !important;
+                right: 0 !important;
+                left: auto !important;
+                height: 100vh !important;
+                width: 280px !important;
+                max-width: 85vw !important;
+                background: var(--darker-bg) !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                padding: 5rem 2rem 2rem !important;
+                gap: 2rem !important;
+                border-left: 1px solid var(--border-glow) !important;
+                transform: translateX(100%) !important;
+                transition: transform 0.3s ease-in-out !important;
+                z-index: 1000 !important;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5) !important;
+                margin: 0 !important;
+                list-style: none !important;
+                box-sizing: border-box !important;
+                overflow-y: auto !important;
+                display: flex !important;
             }
 
             .nav-links.active {
-                transform: translateX(0);
+                transform: translateX(0) !important;
             }
 
             .menu-overlay {
-                display: block;
+                display: block !important;
+                z-index: 999 !important;
+            }
+
+            .menu-overlay.active {
+                display: block !important;
             }
 
             .nav-links li {
@@ -1242,45 +1250,66 @@
     </footer>
 
     <script>
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hamburger menu toggle
+        // Hamburger menu - run immediately and also on DOMContentLoaded
+        function initMenu() {
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('navLinks');
             const menuOverlay = document.getElementById('menuOverlay');
 
-            // Check if elements exist
-            if (hamburger && navLinks && menuOverlay) {
-                hamburger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Hamburger clicked');
-                    hamburger.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                    menuOverlay.classList.toggle('active');
-                });
-
-                // Close menu when clicking on overlay
-                menuOverlay.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                    menuOverlay.classList.remove('active');
-                });
-
-                // Close menu when clicking on a link
-                const navLinksItems = navLinks.querySelectorAll('a');
-                navLinksItems.forEach(link => {
-                    link.addEventListener('click', function() {
-                        hamburger.classList.remove('active');
-                        navLinks.classList.remove('active');
-                        menuOverlay.classList.remove('active');
-                    });
-                });
-            } else {
+            if (!hamburger || !navLinks || !menuOverlay) {
                 console.error('Menu elements not found:', { hamburger, navLinks, menuOverlay });
+                return;
             }
-        });
+
+            // Remove existing listeners by cloning
+            const newHamburger = hamburger.cloneNode(true);
+            hamburger.parentNode.replaceChild(newHamburger, hamburger);
+            
+            const newNavLinks = navLinks.cloneNode(true);
+            navLinks.parentNode.replaceChild(newNavLinks, navLinks);
+
+            // Get fresh references
+            const hamburgerEl = document.getElementById('hamburger');
+            const navLinksEl = document.getElementById('navLinks');
+            const menuOverlayEl = document.getElementById('menuOverlay');
+
+            // Hamburger click handler
+            hamburgerEl.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Hamburger clicked - toggling menu');
+                hamburgerEl.classList.toggle('active');
+                navLinksEl.classList.toggle('active');
+                menuOverlayEl.classList.toggle('active');
+            });
+
+            // Overlay click handler
+            menuOverlayEl.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Overlay clicked - closing menu');
+                hamburgerEl.classList.remove('active');
+                navLinksEl.classList.remove('active');
+                menuOverlayEl.classList.remove('active');
+            });
+
+            // Close menu when clicking on a link
+            const navLinksItems = navLinksEl.querySelectorAll('a');
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', function() {
+                    console.log('Link clicked - closing menu');
+                    hamburgerEl.classList.remove('active');
+                    navLinksEl.classList.remove('active');
+                    menuOverlayEl.classList.remove('active');
+                });
+            });
+        }
+
+        // Try to initialize immediately
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMenu);
+        } else {
+            initMenu();
+        }
     </script>
 </body>
 </html>
