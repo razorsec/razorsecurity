@@ -95,6 +95,7 @@
             align-items: center;
             padding: 2rem 0;
             border-bottom: 1px solid var(--border-glow);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             animation: slideDown 0.8s ease-out;
         }
@@ -321,6 +322,7 @@
             position: relative;
             overflow: hidden;
             transition: all 0.4s;
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
@@ -527,6 +529,11 @@
             color: var(--razor-cyan);
         }
 
+        .footer-section p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
         .copyright {
             color: var(--text-secondary);
             font-size: 0.85rem;
@@ -569,6 +576,86 @@
             pointer-events: none;
             z-index: 100;
         }
+
+        /* Guardrails Section */
+        .guardrails-section {
+            padding: 8rem 0;
+            background: var(--darker-bg);
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .guardrails-content {
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 3rem;
+        }
+
+        .guardrails-intro {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .guardrails-intro h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guardrails-intro p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guardrails-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .guardrail-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            padding: 2rem;
+        }
+
+        .guardrail-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .guardrail-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-red);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .guardrail-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .guardrails-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .guardrails-cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -584,7 +671,7 @@
                 <li><a href="#services">Services</a></li>
                 <li><a href="#technology">Technology</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
 
@@ -598,7 +685,7 @@
                     and neutralize them before they materialize.
                 </p>
                 <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">Deploy Protection</a>
+                    <a href="contact.html" class="btn btn-primary">Deploy Protection</a>
                     <a href="#services" class="btn btn-secondary">Explore Solutions</a>
                 </div>
             </div>
@@ -689,6 +776,134 @@
                         <li>Security code review</li>
                     </ul>
                 </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🤗</div>
+                    <h3>Hugging Face Security</h3>
+                    <p>Comprehensive security for Hugging Face model hubs, APIs, and inference endpoints. 
+                    Protect your models, datasets, and pipelines from unauthorized access and adversarial attacks.</p>
+                    <ul class="service-features">
+                        <li>Model hub access controls</li>
+                        <li>API key management & rotation</li>
+                        <li>Inference endpoint hardening</li>
+                        <li>Dataset security & privacy</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>Cloud AI Security</h3>
+                    <p>Secure your AI workloads across AWS, Azure, and GCP. End-to-end protection for 
+                    cloud-based ML pipelines, model registries, and training infrastructure.</p>
+                    <ul class="service-features">
+                        <li>Multi-cloud security architecture</li>
+                        <li>IAM & access policy optimization</li>
+                        <li>Container & Kubernetes security</li>
+                        <li>Cloud data encryption</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔌</div>
+                    <h3>API Security & Integration</h3>
+                    <p>Protect AI APIs and integrations from abuse, injection attacks, and data exfiltration. 
+                    Implement rate limiting, authentication, and monitoring for secure API operations.</p>
+                    <ul class="service-features">
+                        <li>API authentication & authorization</li>
+                        <li>Rate limiting & DDoS protection</li>
+                        <li>Input validation & sanitization</li>
+                        <li>API gateway security</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Model Deployment Security</h3>
+                    <p>Secure deployment pipelines for production AI models. Ensure safe model serving, 
+                    versioning, and rollback capabilities with comprehensive security controls.</p>
+                    <ul class="service-features">
+                        <li>Secure model serving infrastructure</li>
+                        <li>Model versioning & governance</li>
+                        <li>A/B testing security</li>
+                        <li>Production monitoring & alerting</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Compliance & Governance</h3>
+                    <p>Navigate regulatory requirements for AI systems. GDPR, CCPA, and industry-specific 
+                    compliance frameworks with audit trails and governance documentation.</p>
+                    <ul class="service-features">
+                        <li>GDPR & privacy compliance</li>
+                        <li>AI governance frameworks</li>
+                        <li>Audit logging & reporting</li>
+                        <li>Risk assessment & documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="guardrails-section" id="guardrails">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">AI Guardrailing</div>
+                <h2 class="section-title">Setting Boundaries for Safe AI</h2>
+            </div>
+            <div class="guardrails-content">
+                <div class="guardrails-intro">
+                    <h3>What is AI Guardrailing?</h3>
+                    <p>
+                        AI guardrailing is the practice of implementing safety boundaries, constraints, and control mechanisms 
+                        that ensure AI systems operate within defined ethical, legal, and operational parameters. Just as physical 
+                        guardrails protect drivers from dangerous edges, AI guardrails protect organizations from AI-generated risks 
+                        including harmful content, biased outputs, data leakage, and unauthorized actions.
+                    </p>
+                    <p>
+                        At RazorSecurity, we believe that guardrailing is not about limiting AI's potential—it's about channeling 
+                        its power responsibly. Our guardrailing approach combines technical controls, behavioral monitoring, and 
+                        adaptive constraints that evolve with your AI systems while maintaining strict security boundaries.
+                    </p>
+                </div>
+                <div class="guardrails-grid">
+                    <div class="guardrail-card">
+                        <div class="guardrail-icon">🛡️</div>
+                        <h4>Content Filtering</h4>
+                        <p>
+                            Multi-layer content validation that prevents harmful, biased, or inappropriate outputs before they reach users.
+                        </p>
+                    </div>
+                    <div class="guardrail-card">
+                        <div class="guardrail-icon">⚙️</div>
+                        <h4>Behavioral Constraints</h4>
+                        <p>
+                            Real-time monitoring and intervention systems that detect and prevent unauthorized AI behaviors or actions.
+                        </p>
+                    </div>
+                    <div class="guardrail-card">
+                        <div class="guardrail-icon">🔐</div>
+                        <h4>Data Protection</h4>
+                        <p>
+                            Advanced data loss prevention that ensures sensitive information never leaves your controlled environment.
+                        </p>
+                    </div>
+                    <div class="guardrail-card">
+                        <div class="guardrail-icon">📊</div>
+                        <h4>Continuous Monitoring</h4>
+                        <p>
+                            AI-powered analytics that track system behavior, detect anomalies, and automatically adjust guardrails as threats evolve.
+                        </p>
+                    </div>
+                </div>
+                <div class="guardrails-cta">
+                    <p>
+                        Effective guardrailing requires a deep understanding of both AI capabilities and security principles. 
+                        Our team combines expertise in machine learning, cybersecurity, and ethical AI to build guardrails that 
+                        are both robust and flexible—protecting your systems without stifling innovation.
+                    </p>
+                    <a href="contact.html" class="btn btn-primary">Learn More About Our Guardrailing Solutions</a>
+                </div>
             </div>
         </div>
     </section>
@@ -701,20 +916,20 @@
             </div>
             <div class="tech-grid">
                 <div class="tech-item">
-                    <div class="service-icon">🧠</div>
-                    <h4>Neural Networks</h4>
+                    <div class="service-icon">🎯</div>
+                    <h4>Opportunities</h4>
                 </div>
                 <div class="tech-item">
-                    <div class="service-icon">🔐</div>
-                    <h4>Cryptography</h4>
+                    <div class="service-icon">💼</div>
+                    <h4>Job Leads</h4>
                 </div>
                 <div class="tech-item">
-                    <div class="service-icon">📊</div>
-                    <h4>Behavioral Analysis</h4>
+                    <div class="service-icon">🔬</div>
+                    <h4>AI Research</h4>
                 </div>
                 <div class="tech-item">
-                    <div class="service-icon">⚙️</div>
-                    <h4>Automation</h4>
+                    <div class="service-icon">🤝</div>
+                    <h4>Partnerships</h4>
                 </div>
                 <div class="tech-item">
                     <div class="service-icon">🌐</div>
@@ -760,7 +975,7 @@
             <h2>Ready to Fortify Your Defenses?</h2>
             <p>Don't wait for a breach to take security seriously. Our team is ready to assess your 
             vulnerabilities and implement enterprise-grade protection tailored to your needs.</p>
-            <a href="mailto:contact@razorsecurity.net" class="btn btn-primary">Schedule Consultation</a>
+            <a href="contact.html" class="btn btn-primary">Schedule Consultation</a>
         </div>
     </section>
 
@@ -769,7 +984,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>RazorSecurity</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <p>
                         Elite cybersecurity solutions for the AI era. Protecting what matters most in an 
                         increasingly hostile digital landscape.
                     </p>
@@ -788,17 +1003,17 @@
                     <ul>
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#technology">Technology</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="careers.html">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Connect</h4>
                     <ul>
                         <li><a href="mailto:contact@razorsecurity.net">contact@razorsecurity.net</a></li>
-                        <li><a href="#">Security Blog</a></li>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="blog.html">Security Blog</a></li>
+                        <li><a href="https://github.com/razorsecurity" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                        <li><a href="https://linkedin.com/company/razorsecurity" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                     </ul>
                 </div>
             </div>

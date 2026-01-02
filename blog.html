@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Blog | RazorSecurity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --razor-red: #ff0033;
+            --razor-cyan: #00ffff;
+            --razor-purple: #9d00ff;
+            --dark-bg: #0a0a0f;
+            --darker-bg: #050508;
+            --card-bg: rgba(20, 20, 30, 0.8);
+            --border-glow: rgba(255, 0, 51, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 51, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Glowing orb effect */
+        .orb-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--razor-red) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 1;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-effect:nth-child(2) {
+            background: radial-gradient(circle, var(--razor-cyan) 0%, transparent 70%);
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(10vw, 10vh) scale(1); }
+            33% { transform: translate(80vw, 30vh) scale(1.2); }
+            66% { transform: translate(20vw, 70vh) scale(0.8); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-glow);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            transition: all 0.3s;
+            color: var(--razor-red);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            transform: translateX(10px);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, var(--razor-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .blog-posts {
+            padding: 4rem 0;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .blog-card:hover {
+            border-color: var(--razor-red);
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .blog-meta {
+            color: var(--razor-red);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-cyan);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: var(--razor-cyan);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--razor-red);
+        }
+
+        /* Scan line effect */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to bottom, transparent, var(--razor-red), transparent);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="orb-effect"></div>
+    <div class="orb-effect"></div>
+    <div class="scanline"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">RazorSecurity</a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#technology">Technology</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="page-header">
+            <h1>Security Blog</h1>
+            <p>Insights, research, and analysis on AI security, threat intelligence, and cybersecurity best practices.</p>
+        </div>
+
+        <div class="blog-posts">
+            <article class="blog-card">
+                <div class="blog-meta">January 15, 2026 • AI Security</div>
+                <h2>Understanding AI Guardrails: Building Safe Boundaries for LLMs</h2>
+                <p>
+                    As AI systems become more powerful and integrated into critical applications, implementing 
+                    effective guardrails has become essential. Guardrails are the safety mechanisms that prevent 
+                    AI systems from generating harmful, biased, or inappropriate content. This comprehensive guide 
+                    explores the technical and ethical dimensions of AI guardrailing, from prompt filtering to 
+                    output validation and behavioral constraints.
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-meta">January 8, 2026 • Threat Intelligence</div>
+                <h2>The Rise of AI-Powered Cyber Attacks: What You Need to Know</h2>
+                <p>
+                    Adversaries are increasingly leveraging AI to create more sophisticated and adaptive attacks. 
+                    From AI-generated phishing campaigns to autonomous malware, the threat landscape is evolving 
+                    rapidly. We analyze recent attack patterns and provide actionable defense strategies.
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-meta">December 28, 2025 • Research</div>
+                <h2>Adversarial Attacks on Large Language Models: A Security Analysis</h2>
+                <p>
+                    Our security research team has identified several new attack vectors targeting LLMs, including 
+                    prompt injection, jailbreaking, and model extraction techniques. This technical deep-dive 
+                    examines these vulnerabilities and presents defense mechanisms to protect your AI systems.
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-meta">December 20, 2025 • Best Practices</div>
+                <h2>Implementing Zero-Trust Architecture for AI Workloads</h2>
+                <p>
+                    Traditional security models fall short when protecting AI systems. Zero-trust architecture 
+                    provides a robust framework for securing AI workloads, ensuring that every component, 
+                    every request, and every data flow is verified and monitored. Learn how to implement 
+                    zero-trust principles in your AI infrastructure.
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+
+            <article class="blog-card">
+                <div class="blog-meta">December 12, 2025 • Case Study</div>
+                <h2>How We Prevented a $50M AI Model Theft Attempt</h2>
+                <p>
+                    A detailed case study of how our threat detection systems identified and neutralized a 
+                    sophisticated attempt to extract proprietary AI models. This real-world example demonstrates 
+                    the importance of multi-layered security and continuous monitoring.
+                </p>
+                <a href="#" class="read-more">Read More →</a>
+            </article>
+        </div>
+    </div>
+</body>
+</html>
+

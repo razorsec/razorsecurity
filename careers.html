@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | RazorSecurity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --razor-red: #ff0033;
+            --razor-cyan: #00ffff;
+            --razor-purple: #9d00ff;
+            --dark-bg: #0a0a0f;
+            --darker-bg: #050508;
+            --card-bg: rgba(20, 20, 30, 0.8);
+            --border-glow: rgba(255, 0, 51, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 51, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 51, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Glowing orb effect */
+        .orb-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--razor-red) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 1;
+            animation: orbFloat 15s ease-in-out infinite;
+        }
+
+        .orb-effect:nth-child(2) {
+            background: radial-gradient(circle, var(--razor-cyan) 0%, transparent 70%);
+            animation-delay: -5s;
+            animation-duration: 20s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(10vw, 10vh) scale(1); }
+            33% { transform: translate(80vw, 30vh) scale(1.2); }
+            66% { transform: translate(20vw, 70vh) scale(0.8); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-glow);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            transition: all 0.3s;
+            color: var(--razor-red);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            transform: translateX(10px);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, var(--razor-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .jobs-section {
+            padding: 4rem 0;
+        }
+
+        .job-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            border-color: var(--razor-red);
+            box-shadow: 0 0 30px rgba(255, 0, 51, 0.2);
+        }
+
+        .job-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-requirements {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .job-requirements li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .job-requirements li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--razor-red);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--razor-red);
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: var(--darker-bg);
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--razor-cyan);
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Scan line effect */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to bottom, transparent, var(--razor-red), transparent);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="orb-effect"></div>
+    <div class="orb-effect"></div>
+    <div class="scanline"></div>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">RazorSecurity</a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#technology">Technology</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="page-header">
+            <h1>Join the Defense</h1>
+            <p>Build the future of AI security with a team of elite cybersecurity experts. We're looking for passionate individuals who want to make a real impact in protecting AI systems and digital infrastructure.</p>
+        </div>
+
+        <div class="jobs-section">
+            <div class="job-card">
+                <h3>Senior AI Security Engineer</h3>
+                <div class="job-meta">Remote • Full-time • $150k - $220k</div>
+                <p class="job-description">
+                    Lead the development of cutting-edge security solutions for large language models and AI systems. 
+                    You'll design and implement guardrails, adversarial defense mechanisms, and security protocols 
+                    that protect AI systems from sophisticated attacks.
+                </p>
+                <ul class="job-requirements">
+                    <li>5+ years in cybersecurity or AI/ML security</li>
+                    <li>Deep understanding of LLM architectures and vulnerabilities</li>
+                    <li>Experience with adversarial machine learning</li>
+                    <li>Proficiency in Python, TensorFlow/PyTorch</li>
+                    <li>Strong background in cryptography and secure systems design</li>
+                </ul>
+                <a href="mailto:careers@razorsecurity.net?subject=Senior AI Security Engineer" class="btn">Apply Now</a>
+            </div>
+
+            <div class="job-card">
+                <h3>Threat Intelligence Analyst</h3>
+                <div class="job-meta">Hybrid • Full-time • $120k - $180k</div>
+                <p class="job-description">
+                    Monitor, analyze, and respond to emerging AI-powered threats. Track attack patterns, 
+                    develop threat models, and contribute to our predictive security intelligence platform.
+                </p>
+                <ul class="job-requirements">
+                    <li>3+ years in threat intelligence or security analysis</li>
+                    <li>Knowledge of AI attack vectors and techniques</li>
+                    <li>Experience with SIEM tools and security monitoring</li>
+                    <li>Strong analytical and research skills</li>
+                    <li>Understanding of dark web monitoring and OSINT</li>
+                </ul>
+                <a href="mailto:careers@razorsecurity.net?subject=Threat Intelligence Analyst" class="btn">Apply Now</a>
+            </div>
+
+            <div class="job-card">
+                <h3>Security Researcher</h3>
+                <div class="job-meta">Remote • Full-time • $130k - $200k</div>
+                <p class="job-description">
+                    Conduct advanced security research on AI systems, discover vulnerabilities, and develop 
+                    innovative defense mechanisms. Publish findings and contribute to the security community.
+                </p>
+                <ul class="job-requirements">
+                    <li>PhD or Master's in Computer Science, Cybersecurity, or related field</li>
+                    <li>Published research in AI security or adversarial ML</li>
+                    <li>Experience with penetration testing and vulnerability research</li>
+                    <li>Strong programming skills in multiple languages</li>
+                    <li>Passion for finding and fixing security flaws</li>
+                </ul>
+                <a href="mailto:careers@razorsecurity.net?subject=Security Researcher" class="btn">Apply Now</a>
+            </div>
+
+            <div class="job-card">
+                <h3>DevSecOps Engineer</h3>
+                <div class="job-meta">Remote • Full-time • $110k - $170k</div>
+                <p class="job-description">
+                    Build and maintain secure CI/CD pipelines, infrastructure, and deployment systems for 
+                    our security platforms. Ensure our own systems are hardened and resilient.
+                </p>
+                <ul class="job-requirements">
+                    <li>4+ years in DevOps/DevSecOps</li>
+                    <li>Experience with Kubernetes, Docker, cloud infrastructure</li>
+                    <li>Knowledge of security best practices for cloud deployments</li>
+                    <li>Proficiency in infrastructure as code (Terraform, Ansible)</li>
+                    <li>Understanding of secure software development lifecycle</li>
+                </ul>
+                <a href="mailto:careers@razorsecurity.net?subject=DevSecOps Engineer" class="btn">Apply Now</a>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Don't See Your Role?</h2>
+            <p>
+                We're always looking for exceptional talent. Send us your resume and tell us how you can contribute to our mission.
+            </p>
+            <a href="mailto:careers@razorsecurity.net" class="btn">General Application</a>
+        </div>
+    </div>
+</body>
+</html>
+
