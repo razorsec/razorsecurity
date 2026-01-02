@@ -355,9 +355,156 @@
             z-index: 100;
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1000;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--razor-cyan);
+            transition: all 0.3s;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 968px) {
             .contact-grid {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 280px;
+                background: var(--darker-bg);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5rem 2rem 2rem;
+                gap: 2rem;
+                border-left: 1px solid var(--border-glow);
+                transition: right 0.3s ease-in-out;
+                z-index: 999;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+                padding: 1rem 0;
+                font-size: 1rem;
+                border-bottom: 1px solid rgba(255, 0, 51, 0.2);
+            }
+
+            .nav-links a::before {
+                display: none;
+            }
+
+            .nav-links a:hover {
+                transform: translateX(10px);
+                color: var(--razor-cyan);
+            }
+
+            .menu-overlay {
+                display: block;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            nav {
+                padding: 1.5rem 0;
+            }
+
+            .page-header {
+                padding: 2rem 0;
+            }
+
+            h1 {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+
+            .page-header p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .contact-section {
+                padding: 2rem 0;
+            }
+
+            .contact-grid {
+                gap: 2rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -367,11 +514,17 @@
     <div class="orb-effect"></div>
     <div class="orb-effect"></div>
     <div class="scanline"></div>
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <div class="container">
         <nav>
             <a href="index.html" class="logo">RazorSecurity</a>
-            <ul class="nav-links">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#technology">Technology</a></li>
                 <li><a href="index.html#about">About</a></li>
@@ -447,6 +600,36 @@
             </div>
         </section>
     </div>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        });
+
+        menuOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        });
+
+        const navLinksItems = navLinks.querySelectorAll('a');
+        navLinksItems.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+                menuOverlay.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
+
+
 
