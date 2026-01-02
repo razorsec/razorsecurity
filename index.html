@@ -170,6 +170,9 @@
             gap: 5px;
             z-index: 1000;
             position: relative;
+            padding: 10px;
+            margin: -10px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .hamburger span {
@@ -1228,32 +1231,39 @@
     </footer>
 
     <script>
-        // Hamburger menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        const menuOverlay = document.getElementById('menuOverlay');
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const menuOverlay = document.getElementById('menuOverlay');
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-        });
+            // Check if elements exist
+            if (hamburger && navLinks && menuOverlay) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                    menuOverlay.classList.toggle('active');
+                });
 
-        // Close menu when clicking on overlay
-        menuOverlay.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('active');
-            menuOverlay.classList.remove('active');
-        });
+                // Close menu when clicking on overlay
+                menuOverlay.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    menuOverlay.classList.remove('active');
+                });
 
-        // Close menu when clicking on a link
-        const navLinksItems = navLinks.querySelectorAll('a');
-        navLinksItems.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-                menuOverlay.classList.remove('active');
-            });
+                // Close menu when clicking on a link
+                const navLinksItems = navLinks.querySelectorAll('a');
+                navLinksItems.forEach(link => {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        menuOverlay.classList.remove('active');
+                    });
+                });
+            }
         });
     </script>
 </body>
