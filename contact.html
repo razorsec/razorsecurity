@@ -591,7 +591,7 @@
 
             <div class="contact-form">
                 <h2>Send Us a Message</h2>
-                <form action="mailto:contact@razorsecurity.net" method="post" enctype="text/plain">
+                <form id="contactForm" action="#" method="post">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -615,6 +615,24 @@
     </div>
 
     <script>
+        // Contact form handling
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            // Create mailto link as fallback (better than form action)
+            const mailtoLink = `mailto:contact@razorsecurity.net?subject=${encodeURIComponent(subject || 'Contact Form Submission')}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+            
+            // Try to open mail client, or show email address
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            alert('Thank you for your message! Your email client should open. If not, please email us at contact@razorsecurity.net');
+        });
         // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Hamburger menu toggle
