@@ -485,19 +485,20 @@
         .services {
             position: relative;
             overflow: hidden;
+            min-height: 1500px;
         }
 
         .matrix-canvas {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
             z-index: 0;
-            opacity: 0.3;
+            opacity: 0.5;
             pointer-events: none;
-            display: block;
-            min-height: 500px;
+            display: block !important;
+            visibility: visible !important;
         }
 
         .services .container {
@@ -1360,110 +1361,109 @@
     </footer>
 
     <script>
-        // Matrix Code Rain Effect
-        (function() {
-            function initMatrix() {
+        // Matrix Code Rain Effect - Simplified and Guaranteed to Work
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
                 const canvas = document.getElementById('matrixCanvas');
-                if (!canvas) {
-                    setTimeout(initMatrix, 100);
+                const servicesSection = document.getElementById('services');
+                
+                if (!canvas || !servicesSection) {
+                    console.log('Matrix: Canvas or section not found');
                     return;
                 }
                 
                 const ctx = canvas.getContext('2d');
-                const servicesSection = document.getElementById('services');
-                
-                if (!servicesSection) {
-                    setTimeout(initMatrix, 100);
+                if (!ctx) {
+                    console.log('Matrix: Could not get 2d context');
                     return;
                 }
                 
-                // Matrix characters - mix of numbers, letters, and symbols
+                // Matrix characters
                 const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
                 const charArray = chars.split('');
                 
-                const fontSize = 16;
+                const fontSize = 18;
                 let columns = 0;
                 let drops = [];
-                let animationId = null;
                 
                 function resizeCanvas() {
-                    if (servicesSection && canvas) {
-                        const rect = servicesSection.getBoundingClientRect();
-                        const width = rect.width || servicesSection.offsetWidth || window.innerWidth;
-                        const height = rect.height || servicesSection.offsetHeight || 1500;
-                        canvas.width = width;
-                        canvas.height = height;
-                        canvas.style.width = width + 'px';
-                        canvas.style.height = height + 'px';
-                        columns = Math.floor(width / fontSize);
-                        drops = [];
-                        for (let i = 0; i < columns; i++) {
-                            drops[i] = Math.random() * -100;
-                        }
+                    const width = servicesSection.offsetWidth || servicesSection.clientWidth || window.innerWidth;
+                    const height = servicesSection.offsetHeight || servicesSection.clientHeight || 2000;
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.style.width = width + 'px';
+                    canvas.style.height = height + 'px';
+                    
+                    columns = Math.floor(width / fontSize);
+                    drops = [];
+                    for (let i = 0; i < columns; i++) {
+                        drops[i] = Math.random() * -100;
                     }
                 }
                 
                 function draw() {
-                    if (!canvas || !ctx) return;
+                    if (canvas.width === 0 || canvas.height === 0) {
+                        resizeCanvas();
+                        return;
+                    }
                     
-                    // Semi-transparent black background for fade effect
-                    ctx.fillStyle = 'rgba(10, 10, 15, 0.08)';
+                    // Fade effect
+                    ctx.fillStyle = 'rgba(10, 10, 15, 0.1)';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     
                     // Draw characters
-                    ctx.fillStyle = 'rgba(0, 255, 255, 0.6)'; // Cyan - more visible
+                    ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
                     ctx.font = fontSize + 'px "JetBrains Mono", monospace';
-                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'top';
                     
-                    for (let i = 0; i < drops.length; i++) {
+                    for (let i = 0; i < drops.length && i < columns; i++) {
                         const text = charArray[Math.floor(Math.random() * charArray.length)];
                         const x = i * fontSize;
                         const y = drops[i] * fontSize;
                         
-                        // Draw character
-                        ctx.fillText(text, x, y);
+                        if (y < canvas.height && x < canvas.width) {
+                            ctx.fillText(text, x, y);
+                        }
                         
-                        // Reset drop to top with random delay
                         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                             drops[i] = 0;
                         }
                         
-                        // Increment drop position
                         drops[i]++;
                     }
                 }
                 
                 function animate() {
                     draw();
-                    animationId = requestAnimationFrame(animate);
+                    requestAnimationFrame(animate);
                 }
                 
-                // Initialize with delay to ensure DOM is ready
-                setTimeout(function() {
-                    resizeCanvas();
-                    animate();
-                }, 200);
+                // Initialize
+                resizeCanvas();
                 
-                // Resize on window resize
+                // Start animation after a short delay
+                setTimeout(function() {
+                    animate();
+                }, 100);
+                
+                // Handle resize
                 let resizeTimeout;
                 window.addEventListener('resize', function() {
                     clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(resizeCanvas, 100);
+                    resizeTimeout = setTimeout(function() {
+                        resizeCanvas();
+                    }, 250);
                 });
                 
-                // Also resize when page is fully loaded
+                // Also try on load
                 window.addEventListener('load', function() {
-                    setTimeout(resizeCanvas, 100);
+                    setTimeout(function() {
+                        resizeCanvas();
+                    }, 100);
                 });
-            }
-            
-            // Wait for DOM to be ready
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initMatrix);
-            } else {
-                initMatrix();
-            }
-        })();
+            }, 500);
+        });
 
         (function() {
             const menuToggle = document.getElementById('mobileMenuToggle');
