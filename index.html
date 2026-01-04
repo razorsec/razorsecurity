@@ -494,8 +494,10 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.15;
+            opacity: 0.3;
             pointer-events: none;
+            display: block;
+            min-height: 500px;
         }
 
         .services .container {
@@ -1360,71 +1362,107 @@
     <script>
         // Matrix Code Rain Effect
         (function() {
-            const canvas = document.getElementById('matrixCanvas');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            const servicesSection = document.getElementById('services');
-            
-            // Matrix characters - mix of numbers, letters, and symbols
-            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
-            const charArray = chars.split('');
-            
-            const fontSize = 14;
-            let columns = 0;
-            let drops = [];
-            
-            function resizeCanvas() {
-                if (servicesSection) {
-                    const rect = servicesSection.getBoundingClientRect();
-                    canvas.width = rect.width;
-                    canvas.height = rect.height;
-                    columns = Math.floor(canvas.width / fontSize);
-                    drops = [];
-                    for (let i = 0; i < columns; i++) {
-                        drops[i] = Math.random() * -100;
+            function initMatrix() {
+                const canvas = document.getElementById('matrixCanvas');
+                if (!canvas) {
+                    setTimeout(initMatrix, 100);
+                    return;
+                }
+                
+                const ctx = canvas.getContext('2d');
+                const servicesSection = document.getElementById('services');
+                
+                if (!servicesSection) {
+                    setTimeout(initMatrix, 100);
+                    return;
+                }
+                
+                // Matrix characters - mix of numbers, letters, and symbols
+                const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
+                const charArray = chars.split('');
+                
+                const fontSize = 16;
+                let columns = 0;
+                let drops = [];
+                let animationId = null;
+                
+                function resizeCanvas() {
+                    if (servicesSection && canvas) {
+                        const rect = servicesSection.getBoundingClientRect();
+                        const width = rect.width || servicesSection.offsetWidth || window.innerWidth;
+                        const height = rect.height || servicesSection.offsetHeight || 1500;
+                        canvas.width = width;
+                        canvas.height = height;
+                        canvas.style.width = width + 'px';
+                        canvas.style.height = height + 'px';
+                        columns = Math.floor(width / fontSize);
+                        drops = [];
+                        for (let i = 0; i < columns; i++) {
+                            drops[i] = Math.random() * -100;
+                        }
                     }
                 }
-            }
-            
-            function draw() {
-                // Semi-transparent black background for fade effect
-                ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Draw characters
-                ctx.fillStyle = 'rgba(0, 255, 255, 0.4)'; // Cyan with low opacity
-                ctx.font = fontSize + 'px JetBrains Mono';
-                
-                for (let i = 0; i < drops.length; i++) {
-                    const text = charArray[Math.floor(Math.random() * charArray.length)];
-                    const x = i * fontSize;
-                    const y = drops[i] * fontSize;
+                function draw() {
+                    if (!canvas || !ctx) return;
                     
-                    // Draw character
-                    ctx.fillText(text, x, y);
+                    // Semi-transparent black background for fade effect
+                    ctx.fillStyle = 'rgba(10, 10, 15, 0.08)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                     
-                    // Reset drop to top with random delay
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
+                    // Draw characters
+                    ctx.fillStyle = 'rgba(0, 255, 255, 0.6)'; // Cyan - more visible
+                    ctx.font = fontSize + 'px "JetBrains Mono", monospace';
+                    ctx.textAlign = 'left';
+                    
+                    for (let i = 0; i < drops.length; i++) {
+                        const text = charArray[Math.floor(Math.random() * charArray.length)];
+                        const x = i * fontSize;
+                        const y = drops[i] * fontSize;
+                        
+                        // Draw character
+                        ctx.fillText(text, x, y);
+                        
+                        // Reset drop to top with random delay
+                        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                            drops[i] = 0;
+                        }
+                        
+                        // Increment drop position
+                        drops[i]++;
                     }
-                    
-                    // Increment drop position
-                    drops[i]++;
                 }
+                
+                function animate() {
+                    draw();
+                    animationId = requestAnimationFrame(animate);
+                }
+                
+                // Initialize with delay to ensure DOM is ready
+                setTimeout(function() {
+                    resizeCanvas();
+                    animate();
+                }, 200);
+                
+                // Resize on window resize
+                let resizeTimeout;
+                window.addEventListener('resize', function() {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(resizeCanvas, 100);
+                });
+                
+                // Also resize when page is fully loaded
+                window.addEventListener('load', function() {
+                    setTimeout(resizeCanvas, 100);
+                });
             }
             
-            function animate() {
-                draw();
-                requestAnimationFrame(animate);
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initMatrix);
+            } else {
+                initMatrix();
             }
-            
-            // Initialize
-            resizeCanvas();
-            animate();
-            
-            // Resize on window resize
-            window.addEventListener('resize', resizeCanvas);
         })();
 
         (function() {
