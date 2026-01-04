@@ -677,6 +677,16 @@
             border-top: 1px solid rgba(255, 0, 51, 0.2);
         }
 
+        .copyright a {
+            color: var(--razor-cyan);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .copyright a:hover {
+            color: var(--razor-red);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .mobile-menu-toggle {
@@ -1283,7 +1293,8 @@
                 </div>
             </div>
             <div class="copyright">
-                &copy; 2026 RazorSecurity. All systems protected. All rights reserved.
+                &copy; 2026 RazorSecurity. All systems protected. All rights reserved. | 
+                <a href="privacy.html">Privacy Policy</a>
             </div>
         </div>
     </footer>

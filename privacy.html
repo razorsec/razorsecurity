@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Blog | RazorSecurity</title>
+    <title>Privacy Policy | RazorSecurity</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
@@ -110,8 +110,10 @@
             font-weight: 900;
             background: linear-gradient(135deg, var(--razor-red), var(--razor-cyan));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
+            display: inline-block;
         }
 
         .nav-links {
@@ -159,6 +161,7 @@
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #ffffff, var(--razor-red));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -169,56 +172,49 @@
             margin: 0 auto;
         }
 
-        .blog-posts {
+        .privacy-content {
             padding: 4rem 0;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .blog-card {
+        .privacy-section {
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
             padding: 2.5rem;
             margin-bottom: 2rem;
-            transition: all 0.3s;
         }
 
-        .blog-card:hover {
-            border-color: var(--razor-red);
-            box-shadow: 0 0 30px rgba(255, 0, 51, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .blog-meta {
-            color: var(--razor-red);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-
-        .blog-card h2 {
+        .privacy-section h2 {
             font-family: 'Orbitron', sans-serif;
             color: var(--razor-cyan);
             font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .blog-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
             margin-bottom: 1.5rem;
         }
 
-        .read-more {
-            color: var(--razor-cyan);
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 0.1em;
-            transition: color 0.3s;
+        .privacy-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--razor-red);
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .read-more:hover {
-            color: var(--razor-red);
+        .privacy-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-section ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-section li {
+            margin-bottom: 0.5rem;
         }
 
         /* Scan line effect */
@@ -240,7 +236,7 @@
             z-index: 100;
         }
 
-        /* Mobile Menu - New Design */
+        /* Mobile Menu */
         .mobile-menu-toggle {
             display: none;
             flex-direction: column;
@@ -374,67 +370,6 @@
             color: var(--razor-cyan);
         }
 
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            nav {
-                position: relative;
-                z-index: 1001;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .menu-overlay {
-                display: none !important;
-            }
-
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .logo {
-                font-size: 1.4rem;
-            }
-
-            nav {
-                padding: 1.5rem 0;
-            }
-
-            .page-header {
-                padding: 2rem 0;
-            }
-
-            h1 {
-                font-size: clamp(2rem, 6vw, 3rem);
-            }
-
-            .page-header p {
-                font-size: 1rem;
-                padding: 0 1rem;
-            }
-
-            .blog-posts {
-                padding: 2rem 0;
-            }
-
-            .blog-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .blog-card h2 {
-                font-size: 1.4rem;
-            }
-        }
-
         /* Footer */
         footer {
             padding: 4rem 0 2rem;
@@ -502,6 +437,56 @@
         }
 
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: relative;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            nav {
+                padding: 1.5rem 0;
+            }
+
+            .page-header {
+                padding: 2rem 0;
+            }
+
+            h1 {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+
+            .page-header p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .privacy-content {
+                padding: 2rem 0;
+            }
+
+            .privacy-section {
+                padding: 2rem 1.5rem;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -550,68 +535,147 @@
         </div>
 
         <div class="page-header">
-            <h1>Security Blog</h1>
-            <p>Insights, research, and analysis on AI security, threat intelligence, and cybersecurity best practices.</p>
+            <h1>Privacy Policy</h1>
+            <p>Your privacy and data security are fundamental to our mission. Learn how we protect and handle your information.</p>
         </div>
 
-        <div class="blog-posts">
-            <article class="blog-card">
-                <div class="blog-meta">January 15, 2026 • AI Security</div>
-                <h2>Understanding AI Guardrails: Building Safe Boundaries for LLMs</h2>
+        <div class="privacy-content">
+            <div class="privacy-section">
+                <h2>Introduction</h2>
                 <p>
-                    As AI systems become more powerful and integrated into critical applications, implementing 
-                    effective guardrails has become essential. Guardrails are the safety mechanisms that prevent 
-                    AI systems from generating harmful, biased, or inappropriate content. This comprehensive guide 
-                    explores the technical and ethical dimensions of AI guardrailing, from prompt filtering to 
-                    output validation and behavioral constraints.
+                    At RazorSecurity, we are committed to protecting your privacy and ensuring the security of your personal information. 
+                    This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website 
+                    and use our services.
                 </p>
-                <a href="#" class="read-more">Read More →</a>
-            </article>
+                <p>
+                    <strong>Last Updated:</strong> January 2026
+                </p>
+            </div>
 
-            <article class="blog-card">
-                <div class="blog-meta">January 8, 2026 • Threat Intelligence</div>
-                <h2>The Rise of AI-Powered Cyber Attacks: What You Need to Know</h2>
-                <p>
-                    Adversaries are increasingly leveraging AI to create more sophisticated and adaptive attacks. 
-                    From AI-generated phishing campaigns to autonomous malware, the threat landscape is evolving 
-                    rapidly. We analyze recent attack patterns and provide actionable defense strategies.
-                </p>
-                <a href="#" class="read-more">Read More →</a>
-            </article>
+            <div class="privacy-section">
+                <h2>Information We Collect</h2>
+                <h3>Personal Information</h3>
+                <p>We may collect personal information that you voluntarily provide to us when you:</p>
+                <ul>
+                    <li>Contact us through our website forms</li>
+                    <li>Subscribe to our newsletter or blog</li>
+                    <li>Apply for a position with us</li>
+                    <li>Request information about our services</li>
+                </ul>
+                <p>This information may include your name, email address, phone number, company name, and any other information you choose to provide.</p>
 
-            <article class="blog-card">
-                <div class="blog-meta">December 28, 2025 • Research</div>
-                <h2>Adversarial Attacks on Large Language Models: A Security Analysis</h2>
-                <p>
-                    Our security research team has identified several new attack vectors targeting LLMs, including 
-                    prompt injection, jailbreaking, and model extraction techniques. This technical deep-dive 
-                    examines these vulnerabilities and presents defense mechanisms to protect your AI systems.
-                </p>
-                <a href="#" class="read-more">Read More →</a>
-            </article>
+                <h3>Automatically Collected Information</h3>
+                <p>When you visit our website, we may automatically collect certain information about your device, including:</p>
+                <ul>
+                    <li>IP address</li>
+                    <li>Browser type and version</li>
+                    <li>Operating system</li>
+                    <li>Pages visited and time spent on pages</li>
+                    <li>Referring website addresses</li>
+                </ul>
+            </div>
 
-            <article class="blog-card">
-                <div class="blog-meta">December 20, 2025 • Best Practices</div>
-                <h2>Implementing Zero-Trust Architecture for AI Workloads</h2>
-                <p>
-                    Traditional security models fall short when protecting AI systems. Zero-trust architecture 
-                    provides a robust framework for securing AI workloads, ensuring that every component, 
-                    every request, and every data flow is verified and monitored. Learn how to implement 
-                    zero-trust principles in your AI infrastructure.
-                </p>
-                <a href="#" class="read-more">Read More →</a>
-            </article>
+            <div class="privacy-section">
+                <h2>How We Use Your Information</h2>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Provide, maintain, and improve our services</li>
+                    <li>Respond to your inquiries and requests</li>
+                    <li>Send you newsletters, updates, and marketing communications (with your consent)</li>
+                    <li>Process job applications</li>
+                    <li>Analyze website usage and trends</li>
+                    <li>Detect and prevent security threats</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
+            </div>
 
-            <article class="blog-card">
-                <div class="blog-meta">December 12, 2025 • Case Study</div>
-                <h2>How We Prevented a $50M AI Model Theft Attempt</h2>
+            <div class="privacy-section">
+                <h2>Data Security</h2>
                 <p>
-                    A detailed case study of how our threat detection systems identified and neutralized a 
-                    sophisticated attempt to extract proprietary AI models. This real-world example demonstrates 
-                    the importance of multi-layered security and continuous monitoring.
+                    As a cybersecurity company, we take data security seriously. We implement industry-standard security measures 
+                    to protect your personal information, including:
                 </p>
-                <a href="#" class="read-more">Read More →</a>
-            </article>
+                <ul>
+                    <li>Encryption of data in transit and at rest</li>
+                    <li>Regular security audits and assessments</li>
+                    <li>Access controls and authentication mechanisms</li>
+                    <li>Secure data storage and backup systems</li>
+                    <li>Employee training on data protection</li>
+                </ul>
+                <p>
+                    However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to 
+                    use commercially acceptable means to protect your information, we cannot guarantee absolute security.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Sharing Your Information</h2>
+                <p>We do not sell, trade, or rent your personal information to third parties. We may share your information only in the following circumstances:</p>
+                <ul>
+                    <li><strong>Service Providers:</strong> With trusted third-party service providers who assist us in operating our website and conducting our business</li>
+                    <li><strong>Legal Requirements:</strong> When required by law or to protect our rights and safety</li>
+                    <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
+                    <li><strong>With Your Consent:</strong> When you have given us explicit permission to share your information</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Your Rights</h2>
+                <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+                <ul>
+                    <li>The right to access your personal information</li>
+                    <li>The right to correct inaccurate information</li>
+                    <li>The right to request deletion of your information</li>
+                    <li>The right to object to processing of your information</li>
+                    <li>The right to data portability</li>
+                    <li>The right to withdraw consent</li>
+                </ul>
+                <p>To exercise these rights, please contact us at <a href="mailto:privacy@razorsecurity.net" style="color: var(--razor-cyan);">privacy@razorsecurity.net</a>.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Cookies and Tracking Technologies</h2>
+                <p>
+                    We may use cookies and similar tracking technologies to track activity on our website and store certain information. 
+                    You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do 
+                    not accept cookies, you may not be able to use some portions of our website.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Third-Party Links</h2>
+                <p>
+                    Our website may contain links to third-party websites. We are not responsible for the privacy practices or content 
+                    of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Children's Privacy</h2>
+                <p>
+                    Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information 
+                    from children. If you become aware that a child has provided us with personal information, please contact us, and we 
+                    will take steps to delete such information.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Changes to This Privacy Policy</h2>
+                <p>
+                    We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy 
+                    Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically 
+                    for any changes.
+                </p>
+            </div>
+
+            <div class="privacy-section">
+                <h2>Contact Us</h2>
+                <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:privacy@razorsecurity.net" style="color: var(--razor-cyan);">privacy@razorsecurity.net</a><br>
+                    <strong>Address:</strong> 1234 Cyber Defense Boulevard, San Francisco, CA 94105, United States
+                </p>
+            </div>
         </div>
 
         <footer>
