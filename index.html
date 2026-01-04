@@ -164,33 +164,35 @@
             opacity: 1;
         }
 
-        /* Back Button */
-        .back-button {
+        /* Home Button */
+        .home-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            padding: 0.5rem 1rem;
             background: transparent;
             border: 2px solid var(--razor-cyan);
             border-radius: 4px;
             color: var(--razor-cyan);
-            font-size: 1.2rem;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             margin-right: 1rem;
         }
 
-        .back-button:hover {
+        .home-button:hover {
             border-color: var(--razor-red);
             color: var(--razor-red);
             box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
-            transform: translateX(-3px);
+            transform: translateY(-2px);
         }
 
-        .back-button:active {
-            transform: translateX(-5px);
+        .home-button:active {
+            transform: translateY(0);
         }
 
         /* Mobile Menu - New Design */
@@ -478,6 +480,27 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+        }
+
+        .services {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .services .container {
+            position: relative;
+            z-index: 1;
         }
 
         .service-card {
@@ -951,7 +974,7 @@
     <div class="container">
         <nav>
             <div style="display: flex; align-items: center;">
-                <button class="back-button" id="backButton" aria-label="Go back" title="Go back to previous page">←</button>
+                <a href="index.html" class="home-button" aria-label="Home" title="Go to home page">Home</a>
                 <a href="index.html" class="logo">RazorSecurity</a>
             </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
@@ -1002,6 +1025,7 @@
     </div>
 
     <section class="services" id="services">
+        <canvas class="matrix-canvas" id="matrixCanvas"></canvas>
         <div class="container">
             <div class="section-header">
                 <div class="section-tag">Core Capabilities</div>
@@ -1224,30 +1248,30 @@
                 <h2 class="section-title">Built On Cutting Edge</h2>
             </div>
             <div class="tech-grid">
-                <div class="tech-item">
+                <a href="neural-networks.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">🧠</div>
                     <h4>Neural Networks</h4>
-                </div>
-                <div class="tech-item">
+                </a>
+                <a href="cryptography.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">🔐</div>
                     <h4>Cryptography</h4>
-                </div>
-                <div class="tech-item">
+                </a>
+                <a href="behavioral-analysis.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">📊</div>
                     <h4>Behavioral Analysis</h4>
-                </div>
-                <div class="tech-item">
+                </a>
+                <a href="automation.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">⚙️</div>
                     <h4>Automation</h4>
-                </div>
-                <div class="tech-item">
+                </a>
+                <a href="edge-computing.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">🌐</div>
                     <h4>Edge Computing</h4>
-                </div>
-                <div class="tech-item">
+                </a>
+                <a href="blockchain.html" class="tech-item" style="text-decoration: none; color: inherit;">
                     <div class="service-icon">🔗</div>
                     <h4>Blockchain</h4>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -1334,19 +1358,73 @@
     </footer>
 
     <script>
-        // Back button functionality
+        // Matrix Code Rain Effect
         (function() {
-            const backButton = document.getElementById('backButton');
-            if (backButton) {
-                backButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if (window.history.length > 1) {
-                        window.history.back();
-                    } else {
-                        window.location.href = 'index.html';
+            const canvas = document.getElementById('matrixCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const servicesSection = document.getElementById('services');
+            
+            // Matrix characters - mix of numbers, letters, and symbols
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?';
+            const charArray = chars.split('');
+            
+            const fontSize = 14;
+            let columns = 0;
+            let drops = [];
+            
+            function resizeCanvas() {
+                if (servicesSection) {
+                    const rect = servicesSection.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                    columns = Math.floor(canvas.width / fontSize);
+                    drops = [];
+                    for (let i = 0; i < columns; i++) {
+                        drops[i] = Math.random() * -100;
                     }
-                });
+                }
             }
+            
+            function draw() {
+                // Semi-transparent black background for fade effect
+                ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw characters
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.4)'; // Cyan with low opacity
+                ctx.font = fontSize + 'px JetBrains Mono';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    const x = i * fontSize;
+                    const y = drops[i] * fontSize;
+                    
+                    // Draw character
+                    ctx.fillText(text, x, y);
+                    
+                    // Reset drop to top with random delay
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    // Increment drop position
+                    drops[i]++;
+                }
+            }
+            
+            function animate() {
+                draw();
+                requestAnimationFrame(animate);
+            }
+            
+            // Initialize
+            resizeCanvas();
+            animate();
+            
+            // Resize on window resize
+            window.addEventListener('resize', resizeCanvas);
         })();
 
         (function() {
