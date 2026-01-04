@@ -150,6 +150,35 @@
             opacity: 1;
         }
 
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: 2px solid var(--razor-cyan);
+            border-radius: 4px;
+            color: var(--razor-cyan);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin-right: 1rem;
+        }
+
+        .back-button:hover {
+            border-color: var(--razor-red);
+            color: var(--razor-red);
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.5);
+            transform: translateX(-3px);
+        }
+
+        .back-button:active {
+            transform: translateX(-5px);
+        }
+
         .page-header {
             text-align: center;
             padding: 4rem 0;
@@ -505,13 +534,17 @@
     <div class="scanline"></div>
     <div class="container">
         <nav>
-            <a href="index.html" class="logo">RazorSecurity</a>
+            <div style="display: flex; align-items: center;">
+                <button class="back-button" id="backButton" aria-label="Go back" title="Go back to previous page">←</button>
+                <a href="index.html" class="logo">RazorSecurity</a>
+            </div>
             <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="index.html#services">Services</a></li>
                 <li><a href="index.html#technology">Technology</a></li>
                 <li><a href="index.html#about">About</a></li>
@@ -526,6 +559,7 @@
                     <a href="index.html" class="logo">RazorSecurity</a>
                 </div>
                 <ul class="mobile-menu-links">
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="index.html#services">Services</a></li>
                     <li><a href="index.html#technology">Technology</a></li>
                     <li><a href="index.html#about">About</a></li>
@@ -725,6 +759,21 @@
     </div>
 
     <script>
+        // Back button functionality
+        (function() {
+            const backButton = document.getElementById('backButton');
+            if (backButton) {
+                backButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        })();
+
         (function() {
             const menuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenu = document.getElementById('mobileMenu');
