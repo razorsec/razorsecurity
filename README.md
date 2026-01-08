@@ -97,6 +97,9 @@ Fonts are loaded from Google Fonts:
 
 To change fonts, modify the Google Fonts link and CSS font-family declarations.
 
+### Script Placement (Important)
+Keep `<script>` tags out of the `<style>` block. Putting scripts inside `<style>` breaks CSS parsing and can make the site render white. Place tracking scripts (like GTM) in `<head>` or right after `<body>` instead.
+
 ## 🔒 Security Features (Meta!)
 
 This website demonstrates security principles:
